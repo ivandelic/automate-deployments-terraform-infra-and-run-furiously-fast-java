@@ -1,0 +1,27 @@
+version: 0.1             
+component: build
+timeoutInSeconds: 1000
+shell: bash
+env:
+  exportedVariables:
+    - buildId
+steps:
+  - type: Command
+    name: "Calculate buildId"
+    command: |
+      buildId=`echo ${OCI_BUILD_RUN_ID} | rev | cut -c 1-6 | rev`
+      echo "Build ID: $buildId"
+  - type: Command
+    name: "warp-engine-native"
+    command: |
+      image_name="fra.ocir.io/frsxwtjslf35/cloud-coach-automate-deployments/warp-engine-native"
+      ./mvnw package -Dpackaging=docker-native -Pgraalvm
+      image=$(docker images | grep $image_name | awk -F ' ' '{print $3}')
+      docker tag $image $image_name:$buildId
+outputArtifacts:
+  - name: warp-engine-micronaut-native
+    type: DOCKER_IMAGE
+    location: fra.ocir.io/frsxwtjslf35/cloud-coach-automate-deployments/warp-engine-native
+  - name: warp-engine-native_yaml
+    type: BINARY
+    location: ${OCI_PRIMARY_SOURCE_DIR}/warp-engine-micronaut/warp-engine-native-cicd.yaml
