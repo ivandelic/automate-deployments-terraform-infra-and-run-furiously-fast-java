@@ -72,6 +72,16 @@ variable "repository" {
       namespace_blue = string
       namespace_green = string
     })))
+    deploy_parameters = optional(map(object({
+      name = string
+      default_value = optional(string)
+      description = optional(string)
+    })))
+    build_parameters = optional(map(object({
+      name = string
+      default_value = optional(string)
+      description = optional(string)
+    })))
   }))
 }
 variable "build_branch_name" {

@@ -36,11 +36,17 @@ resource "oci_devops_build_pipeline" "devops_build_pipeline" {
     for_each = var.repository != null ? var.repository : {}
     project_id = oci_devops_project.devops_project.id
     display_name = format("%s-%s", each.value.name, "build-pipe")
-    build_pipeline_parameters {
-        items {
-            name = "buildId"
-            default_value = "id"
-            description = "Docker tag"
+    dynamic "build_pipeline_parameters" {
+        for_each = each.value.build_parameters != null ? [1] : []
+        content {
+            dynamic "items" {
+                for_each = each.value.build_parameters
+                content {
+                    name = items.value.name
+                    default_value = items.value.default_value
+                    description = items.value.description
+                }
+            }
         }
     }
 }
@@ -178,12 +184,18 @@ resource "oci_devops_deploy_pipeline" "devops_deploy_pipeline" {
     for_each = {for key, val in var.repository: key => val if val.deploy_oke != null || val.deploy_oke_bg != null}
     project_id = oci_devops_project.devops_project.id
     display_name = format("%s-%s", each.value.name, "deploy-pipe")
-    description = "Deploy pipeline"
-    deploy_pipeline_parameters {
-      items {
-            name = "buildId"
-            default_value = "id"
-            description = "Docker tag"
+    description = "Deploy pipeline2"
+    dynamic "deploy_pipeline_parameters" {
+        for_each = each.value.deploy_parameters != null ? [1] : []
+        content {
+            dynamic "items" {
+                for_each = each.value.deploy_parameters
+                content {
+                    name = items.value.name
+                    default_value = items.value.default_value
+                    description = items.value.description
+                }
+            }
         }
     }
 }
