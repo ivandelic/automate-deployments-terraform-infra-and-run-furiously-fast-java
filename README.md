@@ -10,7 +10,8 @@ This comprehansive session will give you an insight how automated CI/CD pipeline
    ``` 
 2. Disconnet and remove Git
    ```
-   rm -r .git
+   cd automate-deployments-terraform-infra-and-run-furiously-fast-java
+   rm -rf .git
    ```
 
 ## Terraform Inftrastructure
@@ -21,12 +22,27 @@ Oracle provides [OCI Terraform Provider](https://registry.terraform.io/providers
 ### Terraform Kubernetes Cluster With Networking
 We will terraform OKE as a managed Kubernetes cluster in OCI. OCI Container Engine for Kubernetes is a fully-managed, scalable, and highly available service that you can use to deploy your containerized applications to the cloud. Use Container Engine for Kubernetes (sometimes abbreviated to just OKE) when your development team wants to reliably build, deploy, and manage cloud-native applications. You specify the compute resources that your applications require, and Container Engine for Kubernetes provisions them on Oracle Cloud Infrastructure in an existing OCI tenancy.
 
+1. Get inside setup folder to create infrastructure for running our Warp engines
+   ```
+   cd infrastructure/setups/kubernetes
+   ```
+2. Execute Terraform Init
+   ```
+   terraform init
+   ```
+3. Execute Terraform Apply
+   ```
+   terraform apply -var-file=.tfvars
+   ```
+
+You have successfully created VCN, DNS, OKE, Ingress and K8s namespaces. Output will print statement similar to the following one.
+
 ### Terraform CI/CD Pipelines
 We will Terraform OCI DevOps service. OCI DevOps is a continuous integration and continuous delivery (CI/CD) platform for developers to simplify and automate their software development lifecycle.
 
 1. Get inside setup folder to create infrastructure for OCI DevOps service
    ```
-   cd automate-deployments-terraform-infra-and-run-furiously-fast-java/infrastructure/setups/devops
+   cd infrastructure/setups/devops
    ```
 2. Execute Terraform Init
    ```
@@ -104,4 +120,32 @@ git push -u origin main
 ```
 
 ## Run Furiously Fast Java
-Furiousley fast java is the essence of the cloud native-native development. Oracle produced and helped building GraalVM, Helidon and Micronaut. GraalVM is a new-generation JVM capable of running and compiling Java apps blazingly fast. Helidon stand for the Java framwoekr for builidng cloud-native applications based on the Micorprofile. New and shiny gem, Micronaut is heavily used as a faster engine building 
+Furiousley fast java is the essence of the cloud native-native development. Oracle produced and helped building GraalVM, Helidon and Micronaut. GraalVM is a new-generation JVM capable of running and compiling Java apps blazingly fast. Helidon stand for the Java framwoekr for builidng cloud-native applications based on the Micorprofile. New and shiny gem, Micronaut is heavily used as a faster engine building component.
+
+1. Open Helm UI in browser:
+   ```
+   http://helm-ui.cloud-coach.ivandelic.com/helm-ui
+   ```
+2. Inspect Warp Engine based on Helidon and C2 Compiler in Postman:
+   ```
+   http://warp-engine-c2.cloud-coach.ivandelic.com/universe/traverse
+   or
+   http://ingress.cloud-coach.ivandelic.com/warp-engine-c2/universe/traverse
+   ```
+3. Inspect Warp Engine based on Helidon and Graal Compiler in Postman:
+   ```
+   http://warp-engine-graal.cloud-coach.ivandelic.com/universe/traverse
+   or
+   http://ingress.cloud-coach.ivandelic.com/warp-engine-graal/universe/traverse
+   ```
+4. Inspect Warp Engine based on Microanut and Native Image in Postman:
+   ```
+   http://warp-engine-native.cloud-coach.ivandelic.com/universe/traverse
+   or
+   http://ingress.cloud-coach.ivandelic.com/warp-engine-native/universe/traverse
+   ```
+5. Forward Blue and Green environments locally by executing following commands:
+   ```
+   kubectl port-forward svc/helm-ui-service 8081:80 -n blue &
+   kubectl port-forward svc/helm-ui-service 8082:80 -n green &
+   ```
