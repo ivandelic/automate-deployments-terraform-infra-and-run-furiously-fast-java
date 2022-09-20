@@ -35,7 +35,7 @@ data "oci_core_images" "oke_images" {
 }
 
 module "vcn" {
-  source           = "../../../modules/network-standard"
+  source           = "../../modules/network-standard"
   compartment_ocid = var.compartment_ocid
   dns_zone_name    = var.name
   dns_zone_parent  = var.dns_zone_parent
@@ -46,7 +46,7 @@ module "vcn" {
 }
 
 module "oke-cluster" {
-  source                 = "../../../modules/oke-standard"
+  source                 = "../../modules/oke-standard"
   compartment_ocid       = var.compartment_ocid
   name                   = var.name
   vcn_id                 = module.vcn.vcn_id

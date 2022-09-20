@@ -24,6 +24,9 @@ resource "oci_containerengine_cluster" "oke" {
 }
 
 resource "oci_containerengine_node_pool" "workers" {
+  lifecycle {
+    ignore_changes = [node_config_details[0].defined_tags] # dok OCI TF team ne popravi issue
+  }
   cluster_id     = oci_containerengine_cluster.oke.id
   compartment_id = var.compartment_ocid
   initial_node_labels {
@@ -46,7 +49,7 @@ resource "oci_containerengine_node_pool" "workers" {
       subnet_id           = var.subnet_id_node
     }
     size = var.pool_total_vm
-    #defined_tags = {"Schedule.AnyDay" = "0,0,0,0,0,0,0,*,*,*,*,*,*,*,*,*,*,*,*,0,0,0,0,0"}
+    defined_tags = var.vm_defined_tags
   }
   node_shape = var.vm_shape
   node_shape_config {

@@ -21,7 +21,7 @@ data "oci_identity_compartment" "compartment" {
 }
 
 module "cloud-coach-automate-deployments" {
-  source                           = "../../../modules/devops-oke"
+  source                           = "../../modules/devops-oke"
   compartment_ocid                 = var.compartment_ocid
   compartment_name                 = data.oci_identity_compartment.compartment.name
   tenancy_ocid                     = var.tenancy_ocid

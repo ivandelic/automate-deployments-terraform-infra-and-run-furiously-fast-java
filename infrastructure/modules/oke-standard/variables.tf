@@ -49,3 +49,7 @@ variable "vm_ocpu" {
 variable "vm_image_id" {
   type = string
 }
+variable "vm_defined_tags" {
+  type = map
+  default = {}
+}

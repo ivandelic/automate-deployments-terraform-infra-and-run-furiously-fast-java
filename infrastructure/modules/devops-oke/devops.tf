@@ -44,7 +44,7 @@ resource "oci_devops_build_pipeline" "devops_build_pipeline" {
                 content {
                     name = items.value.name
                     default_value = items.value.default_value
-                    description = items.value.description
+                    description = items.value.description != null ? items.value.description : ""
                 }
             }
         }
@@ -193,7 +193,7 @@ resource "oci_devops_deploy_pipeline" "devops_deploy_pipeline" {
                 content {
                     name = items.value.name
                     default_value = items.value.default_value
-                    description = items.value.description
+                    description = items.value.description != null ? items.value.description : " "
                 }
             }
         }
