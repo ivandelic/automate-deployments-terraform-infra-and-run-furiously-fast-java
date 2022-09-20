@@ -15,7 +15,7 @@ build_branch_name                = "main"
 artifact_repository_name         = "cloud-coach-automate-deployments"
 
 # Deployment Environment
-deployment_oke_cluster_ocid      = "ocid1.cluster.oc1.eu-frankfurt-1.aaaaaaaasbnybgtmlxj67soafeelecqpwyyqb54umoohdniescr7zfwvvgaq"
+#deployment_oke_cluster_ocid      = "ocid1.cluster.oc1.eu-frankfurt-1.aaaaaaaasbnybgtmlxj67soafeelecqpwyyqb54umoohdniescr7zfwvvgaq"
 deployment_oke_cluster_namespace = "default"
 
 ### Reusing dynamic groups and policies
@@ -46,7 +46,7 @@ repository                       = {
     deploy_oke_bg = {
       helm-ui = {
         manifest_key = "helm-ui"
-        ingress_name = "helm-ui-ingress"
+        ingress_name = "helm-ui-ingress-path"
         namespace_blue = "blue"
         namespace_green = "green"
       }

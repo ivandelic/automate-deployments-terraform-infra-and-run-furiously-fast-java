@@ -243,3 +243,7 @@ resource "kubernetes_secret" "ocir_secret_green" {
     })
   }
 }
+
+output "oke_id" {
+  value = module.oke-cluster.oke_id
+}
