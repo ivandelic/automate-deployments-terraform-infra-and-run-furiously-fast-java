@@ -24,4 +24,4 @@ outputArtifacts:
     location: fra.ocir.io/frsxwtjslf35/cloud-coach-automate-deployments/warp-engine-graal
   - name: warp_engine_graal_yaml
     type: BINARY
-    location: ${OCI_PRIMARY_SOURCE_DIR}/warp-engine-graal.yaml
+    location: ${OCI_PRIMARY_SOURCE_DIR}/warp-engine-graal-cicd.yaml

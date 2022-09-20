@@ -24,7 +24,7 @@ spec:
       imagePullSecrets:
         - name: ocirsecret
       nodeSelector:
-        component: graal
+        failure-domain.beta.kubernetes.io/zone: ${helidonGraalNodeLabel}
 ---
 kind: Service
 apiVersion: v1
@@ -41,7 +41,7 @@ spec:
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: warp-engine-graal-ingress
+  name: warp-engine-graal-ingress-host
   annotations:
     kubernetes.io/ingress.class: "nginx"
 spec:
@@ -50,6 +50,25 @@ spec:
       http:
         paths:
           - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: warp-engine-graal-service
+                port:
+                  number: 8080
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: warp-engine-graal-ingress-path
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
+spec:
+  rules:
+    - http:
+        paths:
+          - path: /warp-engine-graal(/|$)(.*)
             pathType: Prefix
             backend:
               service:

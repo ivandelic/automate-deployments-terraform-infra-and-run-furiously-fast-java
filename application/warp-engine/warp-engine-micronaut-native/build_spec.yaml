@@ -15,13 +15,13 @@ steps:
     name: "warp-engine-native"
     command: |
       image_name="fra.ocir.io/frsxwtjslf35/cloud-coach-automate-deployments/warp-engine-native"
-      ./mvnw package -Dpackaging=docker-native -Pgraalvm
+      ./mvnw package -Dpackaging=docker-native -Pgraalvm -Dimage=$image_name
       image=$(docker images | grep $image_name | awk -F ' ' '{print $3}')
       docker tag $image $image_name:$buildId
 outputArtifacts:
-  - name: warp-engine-micronaut-native
+  - name: warp-engine-native
     type: DOCKER_IMAGE
     location: fra.ocir.io/frsxwtjslf35/cloud-coach-automate-deployments/warp-engine-native
   - name: warp_engine_native_yaml
     type: BINARY
-    location: ${OCI_PRIMARY_SOURCE_DIR}/warp-engine-micronaut/warp-engine-native-cicd.yaml
+    location: ${OCI_PRIMARY_SOURCE_DIR}/warp-engine-native-cicd.yaml

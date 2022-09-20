@@ -115,7 +115,7 @@
                 <artifactId>jib-maven-plugin</artifactId>
                 <configuration>
                     <to>
-                        <image>eu-frankfurt-1.ocir.io/frsxwtjslf35/warp/warp-engine-micronaut-native:latest</image>
+                        <image>${image}</image>
                     </to>
                 </configuration>
             </plugin>

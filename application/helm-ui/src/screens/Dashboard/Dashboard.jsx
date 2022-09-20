@@ -12,9 +12,9 @@ class Dashboard extends Component {
       trajectoriesHotspot: [],
       trajectoriesGraal: [],
       trajectoriesNative: [],
-      searchEngineAddressGraal: process.env.REACT_APP_API_URL_GRAAL,
-      searchEngineAddressHotspot: process.env.REACT_APP_API_URL_C2,
-      searchEngineAddressNative: process.env.REACT_APP_API_URL_NATIVE,
+      searchEngineAddressGraal: !process.env.REACT_APP_API_URL_GRAAL ? "/warp-engine-graal/universe/traverse" : process.env.REACT_APP_API_URL_GRAAL,
+      searchEngineAddressHotspot: !process.env.REACT_APP_API_URL_C2 ? "/warp-engine-c2/universe/traverse" : process.env.REACT_APP_API_URL_C2 ,
+      searchEngineAddressNative: !process.env.REACT_APP_API_URL_NATIVE ? "/warp-engine-native/universe/traverse": process.env.REACT_APP_API_URL_NATIVE,
       timeStartGraal: 0,
       timeStartHotspot: 0,
       timeStartNative: 0,
@@ -112,6 +112,7 @@ class Dashboard extends Component {
             <Button onClickHandler={this.activateGraalTraverse.bind(this)} style="button-2" text="HELIDON GRAALVM"></Button>
             <Button onClickHandler={this.activateNativeTraverse.bind(this)} style="button-4" text="MICRONAUT NATIVE"></Button>
             <Button onClickHandler={this.activateParallelTraverse.bind(this)} style="button-3" text="PARALLEL"></Button>
+            <Button style="button-3" text={process.env.REACT_APP_API_URL_GRAAL}></Button>
           </div>
           <div className="stats-holder">
             <Timer styleClass="graal" time={this.state.timeFinishGraal - this.state.timeStartGraal} total={this.state.totalPlanetsGraal}></Timer>

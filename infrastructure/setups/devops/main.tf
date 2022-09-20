@@ -38,3 +38,7 @@ module "cloud-coach-automate-deployments" {
   deployment_oke_cluster_namespace = var.deployment_oke_cluster_namespace
   repository                       = var.repository
 }
+
+output "devops_repository" {
+  value = module.cloud-coach-automate-deployments.devops_repository
+}
